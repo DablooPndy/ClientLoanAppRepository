@@ -178,6 +178,7 @@
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Underwriter\Dashboard.cshtml" />
     <Content Include="Views\Broker\CreateCase.cshtml" />
+    <Content Include="Views\Underwriter\EditCase.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

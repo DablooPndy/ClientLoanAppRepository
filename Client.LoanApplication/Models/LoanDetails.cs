@@ -16,49 +16,52 @@ namespace Client.LoanApplication.Models
 
         [Required]
         public decimal Valuation { get; set; }
+        public decimal LTV { get; set; }
 
-        [Required]
-        [StringLength(20)]
-        public string ChargeType { get; set; }
+        [Display(Name = "Charge Type")]
+        public ChargeType ChargeType { get; set; }
 
         [Required]
         [StringLength(100)]
+        [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
         [Required]
         [StringLength(100)]
+        [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
-        [Required]
-        [StringLength(10)]
-        public string Gender { get; set; }
-
+        public Gender Gender { get; set; }
+        [Required(AllowEmptyStrings =true)]
+        [RegularExpression(@"[0-9]{10}", ErrorMessage = "Value for Contact must be 10 digit")]
         public long Contact { get; set; }
 
+        [RegularExpression(@"[0-9]{6}", ErrorMessage = "Value for Contact must be 6 digit")]
         public int Postcode { get; set; }
 
-        [Required]
-        public bool IsDeleted { get; set; }
-
-        [StringLength(20)]
-        public string UWStatus { get; set; }
+        [Display(Name = "Status")]
+        [Required(AllowEmptyStrings = true)]
+        public UWStatus? UWStatus { get; set; }
 
         [StringLength(300)]
+        [Display(Name = "Reason")]
         public string UWReason { get; set; }
-
-        [StringLength(100)]
-        public string CreatedBy { get; set; }
-
-        public DateTime? CreatedDate { get; set; }
-
-        [StringLength(100)]
-        public string ModifiedBy { get; set; }
-
-        public DateTime? ModifiedDate { get; set; }
-
-        [StringLength(100)]
-        public string CaseReviewedBy { get; set; }
-
-        public DateTime? CaseReviewedDate { get; set; }
+    }
+    public enum Gender
+    {
+        Male,
+        Female,
+        Other
+    }
+    public enum ChargeType
+    {
+        First,
+        Second
+    }
+    public enum UWStatus
+    {
+        Approved,
+        Rejected,
+        Cancelled
     }
 }
