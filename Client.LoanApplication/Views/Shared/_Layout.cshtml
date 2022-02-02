@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Loan Application System</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <style>
+
+        .cntrheaderlleft {
+            /* padding: 8px;*/
+            text-align: left;
+            margin-top: 8px;
+            margin-bottom: 8px;
+            /*padding-left: 10px;*/
+            border: ridge;
+        }
+
+        .cntrheaderlright {
+            /* padding: 8px;*/
+            text-align: right;
+            margin-bottom: 8px;
+            margin-top: 8px;
+            padding-right: 0px;
+        }
+
+        .cntrheaderlcenter {
+            /*padding: 8px;*/
+            text-align: center;
+            margin-top: 17px;
+            /*padding-left: 10px;*/
+        }
+
+        .divheaderbody {
+            border: ridge;
+            margin: 10px;
+        }
+
+        .divbody {
+            border: ridge;
+            width: 70%;
+        }
+
+        .mir {
+            margin: 4px;
+        }
+    </style>
+
+</head>
+<body>
+
+    <div class="container body-content divbody">
+        <div class="divheaderbody">
+            <div class="row" style="margin-left:10px;margin-right:10px;">
+                <div class="form-group">
+                    <div class="col-md-4 cntrheaderlleft">
+                        @Html.Label("Hello, Broker", htmlAttributes: new { @class = "control-label mir" })
+                    </div>
+                    <div class="col-md-4 cntrheaderlcenter">
+                        @Html.ActionLink("Dashboard", "Create")
+                    </div>
+                    <div class="col-md-4 cntrheaderlright">
+                        <input value="Logout" class="btn btn-default" style="width: 157px;" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container body-content" style="width:90%">
+            @RenderBody()
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

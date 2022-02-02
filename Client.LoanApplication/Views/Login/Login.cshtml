@@ -1,0 +1,103 @@
+﻿@model Client.LoanApplication.Models.Login
+
+@{
+    ViewBag.Title = "Login";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title - Loan Application System</title>
+
+
+    <script type="text/javascript">
+        function ClearText() {
+            $('#UserName').val('');
+            $('#Password').val('');
+        }
+    </script>
+
+    <style>
+        .cntrlLeft {
+            padding: 8px;
+            text-align: right;
+            margin-top: 14px;
+            padding-right: 22px;
+        }
+
+        .cntrlRight {
+            padding: 8px;
+            text-align: left;
+            margin-top: 8px;
+            padding-left: 10px;
+        }
+
+        .divbody {
+            border: ridge;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Styles.Render("~/Content/css")
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="container body-content" style="width:50%">
+
+            <div class="row text-center">
+                <div class="row text-center:center" style="margin-bottom:10px;">
+                    <h3>Loan Application System</h3>
+                </div>
+            </div>
+
+            <div class="divbody">
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-2"></div>
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="col-md-3 cntrlLeft" style="margin-top:17px;">
+                            @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-4 cntrlRight">
+                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-3"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-3 cntrlLeft" style="margin-top:9px;">
+                            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-4 cntrlRight" style="margin-top:0px;">
+                            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-3"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-6 text-right" style="padding-right:0px;margin-top:15px;">
+                            <input type="submit" value="Login" class="btn btn-default" style="width:150px;" />
+                        </div>
+                        <div class="col-md-6 text-left">
+                            <input value="Cancel" class="btn btn-default" style="width: 157px; margin-top: 15px;" onclick="ClearText();" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</body>
+</html>

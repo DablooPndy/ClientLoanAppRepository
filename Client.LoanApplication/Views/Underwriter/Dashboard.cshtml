@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Client.LoanApplication.Models.LoanDetails>
+
+@{
+    ViewBag.Title = "Dashboard";
+}
+
+<div style="text-align: right; margin-bottom: 25px; margin-top: 15px;">
+    <input value="Create Case" class="btn btn-default" style="width: 157px;" />
+</div>
+<div>
+    <table class="table table-bordered table-striped">
+        <thead style="background-color: darkgrey; border-block-color: darkgrey; ">
+            <tr>
+                <th>Loan Amount</th>
+                <th>Valuation</th>
+                <th>LTV</th>
+                <th>Firs tName</th>
+                <th>Postcode</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Amount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Valuation)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ChargeType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Postcode)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UWStatus)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Review", "Edit", new { id = item.Id }) 
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<style>
+    .table th {
+        text-align: center;
+    }
+
+    .table td {
+        text-align: center;
+    }
+</style>

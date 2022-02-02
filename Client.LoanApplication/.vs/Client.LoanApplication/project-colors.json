@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "436c3d56-753e-4064-b2f6-132a56616e5c": {
+      "ProjectGuid": "436c3d56-753e-4064-b2f6-132a56616e5c",
+      "DisplayName": "Client.LoanApplication",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}
