@@ -4,9 +4,6 @@
     ViewBag.Title = "Dashboard";
 }
 
-<div style="text-align: right; margin-bottom: 25px; margin-top: 15px;">
-    <input value="Create Case" class="btn btn-default" style="width: 157px;" />
-</div>
 <div>
     <table class="table table-bordered table-striped">
         <thead style="background-color: darkgrey; border-block-color: darkgrey; ">
@@ -45,7 +42,7 @@
                         @Html.DisplayFor(modelItem => item.UWStatus)
                     </td>
                     <td>
-                        @Html.ActionLink("Review", "Edit", new { id = item.Id }) 
+                        @Html.ActionLink("Review", "EditCase", new { id = item.Id }) 
                     </td>
                 </tr>
             }

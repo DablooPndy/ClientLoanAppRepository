@@ -46,6 +46,10 @@
         .mir {
             margin: 4px;
         }
+
+        .Actionbtn {
+            width : 130px;
+        }
     </style>
 
 </head>
@@ -59,10 +63,10 @@
                         @Html.Label("Hello, Broker", htmlAttributes: new { @class = "control-label mir" })
                     </div>
                     <div class="col-md-4 cntrheaderlcenter">
-                        @Html.ActionLink("Dashboard", "Create")
+                        @Html.ActionLink("Dashboard", "Dashboard", "Broker")
                     </div>
                     <div class="col-md-4 cntrheaderlright">
-                        <input value="Logout" class="btn btn-default" style="width: 157px;" />
+                        @Html.ActionLink("Logout", "Login", "Login",null, htmlAttributes: new { @class = "btn btn-default Actionbtn" })
                     </div>
                 </div>
             </div>

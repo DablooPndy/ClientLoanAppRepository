@@ -39,5 +39,30 @@ namespace Client.LoanApplication.Controllers
             }
             return View();
         }
+
+        [HttpGet]
+        public ActionResult EditCase(int id)
+        {
+            Models.LoanDetails loanDetails = new Models.LoanDetails { Id = 1, Amount = 1000, Valuation = 500, ChargeType = ChargeType.First, FirstName = "Abcfn", LastName = "Abcln", Gender = Gender.Male, Contact = 9892804840, Postcode = 421605 };
+            return View("CreateCase", loanDetails);
+        }
+
+        [HttpPost]
+        public ActionResult EditCase(Models.LoanDetails _loanDetails)
+        {
+            if (ModelState.IsValid)
+            {
+                Models.LoanDetails loanDetails = new Models.LoanDetails { Id = 1, Amount = 1000, Valuation = 500, ChargeType = ChargeType.First, FirstName = "Abcfn", LastName = "Abcln", Gender = Gender.Male, Contact = 9892804840, Postcode = 421605 };
+            }
+           
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult DeleteCase(int id)
+        {
+            Models.LoanDetails loanDetails = new Models.LoanDetails { Id = 1, Amount = 1000, Valuation = 500, ChargeType = ChargeType.First, FirstName = "Abcfn", LastName = "Abcln", Gender = Gender.Male, Contact = 9892804840, Postcode = 421605 };
+            return View("Dashboard");
+        }
     }
 }
