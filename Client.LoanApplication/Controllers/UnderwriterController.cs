@@ -3,41 +3,80 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using AutoMapper;
 using Client.LoanApplication.Models;
+using Client.LoanApplication.OpenAPIConfiguration;
 
 namespace Client.LoanApplication.Controllers
 {
     public class UnderwriterController : Controller
     {
-       [HttpGet]
+        private readonly IMapper _mapper = null;
+        private readonly IUnderwriterClient _underwriterClient = null;
+        public UnderwriterController(IMapper _mapper, IUnderwriterClient _underwriterClient)
+        {
+            this._mapper = _mapper;
+            this._underwriterClient = _underwriterClient;
+        }
+
+        /// <summary>
+        /// Get all details
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
         public ActionResult Dashboard()
         {
-            return View(GetAllLoandeatils());
+            List<Models.LoanDetails> _lsloanDetails = _mapper.Map<List<Models.LoanDetails>>(_underwriterClient.GetAllLoanDetailsAsync().Result.ToList());
+
+            _lsloanDetails.ForEach(s => s.LTV = ((s.Amount / s.Valuation) * 100));
+
+            return View(_lsloanDetails as IEnumerable<Models.LoanDetails>);
         }
 
-        private IEnumerable<Models.LoanDetails> GetAllLoandeatils()
+        /// <summary>
+        /// Blank Page for Create case
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult CreateCase()
         {
-            var lsloanDetails = new List<Client.LoanApplication.Models.LoanDetails>();
-            lsloanDetails.Add(new Client.LoanApplication.Models.LoanDetails { Id = 1, Amount = 1000, Valuation = 500, ChargeType = ChargeType.First, FirstName = "Abcfn", LastName = "Abcln", Gender = Gender.Male, Contact = 9892804840, Postcode = 421605 });
-            lsloanDetails.Add(new Client.LoanApplication.Models.LoanDetails { Id = 2, Amount = 3000, Valuation = 1500, ChargeType = ChargeType.First, FirstName = "Xyzfn", LastName = "Xyzln", Gender = Gender.Female, Contact = 9892123456, Postcode = 427894 });
-
-            return lsloanDetails as IEnumerable<Models.LoanDetails>;
+            return View();
         }
 
+        /// <summary>
+        /// Get details for Edit
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult EditCase(int id)
         {
-            Models.LoanDetails loanDetails = new Models.LoanDetails { Id = 1, Amount = 1000, Valuation = 500, ChargeType = ChargeType.First, FirstName = "Abcfn", LastName = "Abcln", Gender = Gender.Male, Contact = 9892804840, Postcode = 421605 };
-            return View(loanDetails);
+            if (ModelState.IsValid)
+            {
+                Models.LoanDetails _loanDetails = _mapper.Map<Models.LoanDetails>(_underwriterClient.GetLoanDetailsByIDAsync(id).Result);
+
+                if (_loanDetails != null && _loanDetails.Id == id)
+                    return View(_loanDetails);
+            }
+            return RedirectToAction("Dashboard");
         }
+
+        /// <summary>
+        /// Update Details
+        /// </summary>
+        /// <param name="_loanDetails"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult EditCase(Models.LoanDetails _loanDetails)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                string temp = "";
+                LoanDetails _loanDetailsClnt = _mapper.Map<LoanDetails>(_loanDetails);
+
+                if (_underwriterClient.UpdateLoanDetailsAsync(_loanDetailsClnt).Result)
+                    RedirectToAction("Dashboard");
             }
-            return View();
+            return View(_loanDetails);
         }
     }
 }
