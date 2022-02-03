@@ -46,6 +46,13 @@ namespace Client.LoanApplication.Models
         [StringLength(300)]
         [Display(Name = "Reason")]
         public string UWReason { get; set; }
+
+        public string CreatedBy { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public string ModifiedBy { get; set; }
+        public DateTime? ModifiedDate { get; set; }
+        public string CaseReviewedBy { get; set; }
+        public DateTime? CaseReviewedDate { get; set; }
     }
     public enum Gender
     {

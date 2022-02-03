@@ -20,7 +20,7 @@ namespace Client.LoanApplication.Controllers
         }
 
         /// <summary>
-        /// Get all details
+        /// Get all Dashboard details
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -28,7 +28,7 @@ namespace Client.LoanApplication.Controllers
         {
             List<Models.LoanDetails> _lsloanDetails = _mapper.Map<List<Models.LoanDetails>>(_brokerClient.GetAllLoanDetailsAsync().Result.ToList());
 
-            _lsloanDetails.ForEach(s => s.LTV = ((s.Amount / s.Valuation) * 100));
+            _lsloanDetails.ForEach(s => s.LTV = Utility.GetCalculatedLTV(s.Amount,s.Valuation));
 
             return View(_lsloanDetails as IEnumerable<Models.LoanDetails>);
         }
@@ -74,7 +74,10 @@ namespace Client.LoanApplication.Controllers
                 Models.LoanDetails _loanDetails = _mapper.Map<Models.LoanDetails>(_brokerClient.GetLoanDetailsByIDAsync(id).Result);
 
                 if (_loanDetails != null && _loanDetails.Id == id)
-                    return View(_loanDetails);
+                {
+                    _loanDetails.LTV = Utility.GetCalculatedLTV(_loanDetails.Amount, _loanDetails.Valuation);
+                    return View("CreateCase", _loanDetails);
+                } 
             }
             return RedirectToAction("Dashboard");
         }
