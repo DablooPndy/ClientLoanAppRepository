@@ -23,31 +23,40 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Amount)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Valuation)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LTV)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FirstName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Postcode)
-                    </td>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Valuation)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LTV)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Postcode)
+                </td>
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UWStatus)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "EditCase", new { id = item.Id }) |
-                        @Html.ActionLink("Delete", "DeleteCase", new { id = item.Id })
-                    </td>
-                </tr>
+                
+                <td>
+                    @if (item.UWStatus == 0)
+                    {
+                        @Html.Display("");
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.UWStatus);
+                    }
+                </td>
+                
+                <td>
+                    @Html.ActionLink("Edit", "EditCase", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "DeleteCase", new { id = item.Id })
+                </td>
+            </tr>
             }
         </tbody>
     </table>

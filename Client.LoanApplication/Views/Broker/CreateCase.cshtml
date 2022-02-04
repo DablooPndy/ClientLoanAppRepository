@@ -79,7 +79,9 @@
         <div class="form-group">
             @Html.LabelFor(model => model.LTV, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10" style="margin-top: 7px;">
-                @Html.Label("0", new { id = "lblLTV" })
+                <span class="LTVClass">
+                    @Html.DisplayFor(model => model.LTV)
+                </span>
             </div>
         </div>
 
@@ -97,9 +99,9 @@
 }
 
 <script type="text/javascript">
+
     document.getElementById("Amount").addEventListener("blur", LTVCaculation);
     document.getElementById("Valuation").addEventListener("blur", LTVCaculation);
-
     function LTVCaculation() {
         var CalculatedLTV = 0;
         $('#lblLTV').html(CalculatedLTV);
@@ -110,7 +112,7 @@
         else {
             CalculatedLTV = 0;
         }
-        $('#lblLTV').html(CalculatedLTV);
+        $(".LTVClass").html(CalculatedLTV.toFixed(2));
     }
 </script>
 <style>

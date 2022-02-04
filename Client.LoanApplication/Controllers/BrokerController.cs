@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
 using Client.LoanApplication.OpenAPIConfiguration;
+using System.Threading.Tasks;
 
 namespace Client.LoanApplication.Controllers
 {
@@ -24,13 +25,10 @@ namespace Client.LoanApplication.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult Dashboard()
+        public async Task<ActionResult> Dashboard()
         {
-            List<Models.LoanDetails> _lsloanDetails = _mapper.Map<List<Models.LoanDetails>>(_brokerClient.GetAllLoanDetailsAsync().Result.ToList());
-
-            _lsloanDetails.ForEach(s => s.LTV = Utility.GetCalculatedLTV(s.Amount,s.Valuation));
-
-            return View(_lsloanDetails as IEnumerable<Models.LoanDetails>);
+            List<Models.LoanDetails> _lsloanDetails =  _mapper.Map<List<Models.LoanDetails>>(await _brokerClient.GetAllLoanDetailsAsync()).ToList();
+            return View(_mapper.Map<List<Models.LoanDetails>>(await _brokerClient.GetAllLoanDetailsAsync()).ToList() as IEnumerable<Models.LoanDetails>);
         }
 
         /// <summary>
@@ -51,13 +49,13 @@ namespace Client.LoanApplication.Controllers
         [HttpPost]
         public ActionResult CreateCase(Models.LoanDetails _loanDetails)
         {
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid && _loanDetails.UWReason == null)
+            //{
                 LoanDetails _loanDetailsClnt = _mapper.Map<LoanDetails>(_loanDetails);
 
                 if (_brokerClient.InsertLoanDetailsAsync(_loanDetailsClnt).Result)
-                    RedirectToAction("Dashboard");
-            }
+                   RedirectToAction("Dashboard");
+            //}
             return View(_loanDetails);
         }
 
@@ -75,7 +73,6 @@ namespace Client.LoanApplication.Controllers
 
                 if (_loanDetails != null && _loanDetails.Id == id)
                 {
-                    _loanDetails.LTV = Utility.GetCalculatedLTV(_loanDetails.Amount, _loanDetails.Valuation);
                     return View("CreateCase", _loanDetails);
                 } 
             }
@@ -106,11 +103,11 @@ namespace Client.LoanApplication.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete]
-        public ActionResult DeleteCase(int id)
+        public async Task<ActionResult>  DeleteCase(int id)
         {
             if (ModelState.IsValid)
             {
-                bool isDeleted = _brokerClient.DeleteLoanDetailsAsync(id).Result;
+                bool isDeleted = await _brokerClient.DeleteLoanDetailsAsync(id);
             }
             return View();
         }

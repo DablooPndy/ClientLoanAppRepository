@@ -1118,6 +1118,9 @@ namespace Client.LoanApplication
         [Newtonsoft.Json.JsonProperty("Valuation", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public double? Valuation { get; set; }
     
+        [Newtonsoft.Json.JsonProperty("LTV", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public double? LTV { get; set; }
+    
         [Newtonsoft.Json.JsonProperty("ChargeType", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string ChargeType { get; set; }
     

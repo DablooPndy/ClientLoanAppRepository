@@ -172,6 +172,7 @@
     <Compile Include="Mapping\ContractToModelProfile.cs" />
     <Compile Include="Mapping\ModelToContractProfile.cs" />
     <Compile Include="Models\LoanDetails.cs" />
+    <Compile Include="Models\LoanDetailsEnums.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="OpenAPIConfiguration\Brokerclient.cs" />
     <Compile Include="OpenAPIConfiguration\IBrokerClient.cs" />

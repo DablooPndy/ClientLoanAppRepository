@@ -7,13 +7,13 @@ namespace Client.LoanApplication
 {
     public static class Utility
     {
-        public static decimal GetCalculatedLTV(decimal Amount,decimal Valuation)
-        {
-            if(Amount >0 && Valuation > 0)
-            {
-                return (Amount / Valuation) / 100;
-            }
-            return 0;
-        }
+        //public static decimal GetCalculatedLTV(decimal Amount,decimal Valuation)
+        //{
+        //    if(Amount >0 && Valuation > 0)
+        //    {
+        //        return (Amount / Valuation) / 100;
+        //    }
+        //    return 0;
+        //}
     }
 }

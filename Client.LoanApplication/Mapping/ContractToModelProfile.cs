@@ -16,7 +16,7 @@ namespace Client.LoanApplication.Mapping
         /// </summary>
         public ContractToModelProfile()
         {
-            CreateMap<LoanDetails, Models.LoanDetails>().ForMember(i => i.UWStatus,s => s.Ignore());
+            CreateMap<LoanDetails, Models.LoanDetails>();//.ForMember(i => i.UWStatus,s => s.Ignore());
         }
     }
 }

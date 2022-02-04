@@ -26,11 +26,8 @@ namespace Client.LoanApplication.Controllers
         [HttpGet]
         public ActionResult Dashboard()
         {
-            List<Models.LoanDetails> _lsloanDetails = _mapper.Map<List<Models.LoanDetails>>(_underwriterClient.GetAllLoanDetailsAsync().Result.ToList());
-
-            _lsloanDetails.ForEach(s => s.LTV = Utility.GetCalculatedLTV(s.Amount, s.Valuation));
-
-            return View(_lsloanDetails as IEnumerable<Models.LoanDetails>);
+           // List<Models.LoanDetails> _lsloanDetails = _mapper.Map<List<Models.LoanDetails>>(_underwriterClient.GetAllLoanDetailsAsync().Result.ToList());
+            return View(_mapper.Map<List<Models.LoanDetails>>(_underwriterClient.GetAllLoanDetailsAsync().Result.ToList()) as IEnumerable<Models.LoanDetails>);
         }
 
         /// <summary>
@@ -47,7 +44,6 @@ namespace Client.LoanApplication.Controllers
 
                 if (_loanDetails != null && _loanDetails.Id == id)
                 {
-                    _loanDetails.LTV = Utility.GetCalculatedLTV(_loanDetails.Amount, _loanDetails.Valuation);
                     return View(_loanDetails);
                 }
             }

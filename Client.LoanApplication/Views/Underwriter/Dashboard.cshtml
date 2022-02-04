@@ -29,7 +29,7 @@
                         @Html.DisplayFor(modelItem => item.Valuation)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.ChargeType)
+                        @Html.DisplayFor(modelItem => item.LTV)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.FirstName)
@@ -39,7 +39,14 @@
                     </td>
 
                     <td>
-                        @Html.DisplayFor(modelItem => item.UWStatus)
+                        @if (item.UWStatus == null)
+                        {
+                            @Html.Display("");
+                        }
+                        else
+                        {
+                        @Html.DisplayFor(modelItem => item.UWStatus);
+                        }
                     </td>
                     <td>
                         @Html.ActionLink("Review", "EditCase", new { id = item.Id }) 
