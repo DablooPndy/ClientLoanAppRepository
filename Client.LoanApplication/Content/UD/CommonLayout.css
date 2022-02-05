@@ -1,4 +1,4 @@
-﻿
+﻿/*Common Layout page CSS*/
 .cntrheaderlleft {
     text-align: left;
     margin-top: 8px;
@@ -34,4 +34,24 @@
 
 .Actionbtn {
     width: 130px;
+}
+
+/*Login Page CSS*/
+.cntrlLeftLogin {
+    padding: 8px;
+    text-align: right;
+    margin-top: 14px;
+    padding-right: 22px;
+}
+
+.cntrlRightLogin {
+    padding: 8px;
+    text-align: left;
+    margin-top: 8px;
+    padding-left: 10px;
+}
+
+.divbodyLogin {
+    border: ridge;
+    padding: 20px;
 }

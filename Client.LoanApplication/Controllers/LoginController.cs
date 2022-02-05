@@ -44,12 +44,9 @@ namespace Client.LoanApplication.Controllers
                 }
 
                 ModelState.AddModelError("", "invalid Username or Password");
-                return View();
-
-
-              
+                return View(_login);
             }
-            return View();
+            return View(_login);
         }
 
         [HttpGet]
