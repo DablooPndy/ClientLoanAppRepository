@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Client.LoanApplication.Controllers
 {
+    [Authorize]
     public class BrokerController : Controller
     {
         private readonly IMapper _mapper = null;
@@ -27,7 +28,7 @@ namespace Client.LoanApplication.Controllers
         [HttpGet]
         public async Task<ActionResult> Dashboard()
         {
-            List<Models.LoanDetails> _lsloanDetails =  _mapper.Map<List<Models.LoanDetails>>(await _brokerClient.GetAllLoanDetailsAsync()).ToList();
+           // List<Models.LoanDetails> _lsloanDetails =  _mapper.Map<List<Models.LoanDetails>>(await _brokerClient.GetAllLoanDetailsAsync()).ToList();
             return View(_mapper.Map<List<Models.LoanDetails>>(await _brokerClient.GetAllLoanDetailsAsync()).ToList() as IEnumerable<Models.LoanDetails>);
         }
 
@@ -47,13 +48,13 @@ namespace Client.LoanApplication.Controllers
         /// <param name="_loanDetails"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult CreateCase(Models.LoanDetails _loanDetails)
+        public async Task<ActionResult> CreateCase(Models.LoanDetails _loanDetails)
         {
             //if (ModelState.IsValid && _loanDetails.UWReason == null)
             //{
                 LoanDetails _loanDetailsClnt = _mapper.Map<LoanDetails>(_loanDetails);
 
-                if (_brokerClient.InsertLoanDetailsAsync(_loanDetailsClnt).Result)
+                if (await _brokerClient.InsertLoanDetailsAsync(_loanDetailsClnt))
                    RedirectToAction("Dashboard");
             //}
             return View(_loanDetails);
@@ -65,11 +66,11 @@ namespace Client.LoanApplication.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult EditCase(int id)
+        public async Task<ActionResult> EditCase(int id)
         {
             if (ModelState.IsValid)
             {
-                Models.LoanDetails _loanDetails = _mapper.Map<Models.LoanDetails>(_brokerClient.GetLoanDetailsByIDAsync(id).Result);
+                Models.LoanDetails _loanDetails = _mapper.Map<Models.LoanDetails>(await _brokerClient.GetLoanDetailsByIDAsync(id));
 
                 if (_loanDetails != null && _loanDetails.Id == id)
                 {
@@ -85,13 +86,13 @@ namespace Client.LoanApplication.Controllers
         /// <param name="_loanDetails"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult EditCase(Models.LoanDetails _loanDetails)
+        public async Task<ActionResult> EditCase(Models.LoanDetails _loanDetails)
         {
             if (ModelState.IsValid)
             {
                 LoanDetails _loanDetailsClnt = _mapper.Map<LoanDetails>(_loanDetails);
 
-                if (_brokerClient.UpdateLoanDetailsAsync(_loanDetailsClnt).Result)
+                if (await _brokerClient.UpdateLoanDetailsAsync(_loanDetailsClnt))
                     RedirectToAction("Dashboard");
             }
             return View(_loanDetails);
@@ -102,7 +103,7 @@ namespace Client.LoanApplication.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpDelete]
+        [HttpPost]
         public async Task<ActionResult>  DeleteCase(int id)
         {
             if (ModelState.IsValid)

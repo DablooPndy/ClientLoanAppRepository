@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
@@ -24,10 +25,10 @@ namespace Client.LoanApplication.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult Dashboard()
+        public async Task<ActionResult> Dashboard()
         {
            // List<Models.LoanDetails> _lsloanDetails = _mapper.Map<List<Models.LoanDetails>>(_underwriterClient.GetAllLoanDetailsAsync().Result.ToList());
-            return View(_mapper.Map<List<Models.LoanDetails>>(_underwriterClient.GetAllLoanDetailsAsync().Result.ToList()) as IEnumerable<Models.LoanDetails>);
+            return View(_mapper.Map<List<Models.LoanDetails>>(await _underwriterClient.GetAllLoanDetailsAsync()).ToList() as IEnumerable<Models.LoanDetails>);
         }
 
         /// <summary>
@@ -36,11 +37,11 @@ namespace Client.LoanApplication.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult EditCase(int id)
+        public async Task<ActionResult> EditCase(int id)
         {
             if (ModelState.IsValid)
             {
-                Models.LoanDetails _loanDetails = _mapper.Map<Models.LoanDetails>(_underwriterClient.GetLoanDetailsByIDAsync(id).Result);
+                Models.LoanDetails _loanDetails = _mapper.Map<Models.LoanDetails>(await _underwriterClient.GetLoanDetailsByIDAsync(id));
 
                 if (_loanDetails != null && _loanDetails.Id == id)
                 {
@@ -56,13 +57,13 @@ namespace Client.LoanApplication.Controllers
         /// <param name="_loanDetails"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult EditCase(Models.LoanDetails _loanDetails)
+        public async Task<ActionResult> EditCase(Models.LoanDetails _loanDetails)
         {
             if (ModelState.IsValid)
             {
                 LoanDetails _loanDetailsClnt = _mapper.Map<LoanDetails>(_loanDetails);
 
-                if (_underwriterClient.UpdateLoanDetailsAsync(_loanDetailsClnt).Result)
+                if (await _underwriterClient.UpdateLoanDetailsAsync(_loanDetailsClnt))
                     return RedirectToAction("Dashboard", "Underwriter");
             }
             return View(_loanDetails);

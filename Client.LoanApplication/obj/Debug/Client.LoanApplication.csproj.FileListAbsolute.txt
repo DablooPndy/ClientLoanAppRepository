@@ -177,8 +177,8 @@ C:\Brijesh\ClientLoanApplication\Client.LoanApplication-Git\Client.LoanApplicati
 C:\Brijesh\ClientLoanApplication\Client.LoanApplication-Git\Client.LoanApplication\bin\Antlr3.Runtime.pdb
 C:\Brijesh\ClientLoanApplication\Client.LoanApplication-Git\Client.LoanApplication\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 C:\Brijesh\ClientLoanApplication\Client.LoanApplication-Git\Client.LoanApplication\bin\System.Net.Http.Formatting.xml
-C:\Brijesh\ClientLoanApplication\Client.LoanApplication-Git\Client.LoanApplication\obj\Debug\Client.LoanApplication.csproj.AssemblyReference.cache
 C:\Brijesh\ClientLoanApplication\Client.LoanApplication-Git\Client.LoanApplication\obj\Debug\Client.LoanApplication.csproj.CoreCompileInputs.cache
 C:\Brijesh\ClientLoanApplication\Client.LoanApplication-Git\Client.LoanApplication\obj\Debug\Client.LoanApplication.csproj.CopyComplete
 C:\Brijesh\ClientLoanApplication\Client.LoanApplication-Git\Client.LoanApplication\obj\Debug\Client.LoanApplication.dll
 C:\Brijesh\ClientLoanApplication\Client.LoanApplication-Git\Client.LoanApplication\obj\Debug\Client.LoanApplication.pdb
+C:\Brijesh\ClientLoanApplication\Client.LoanApplication-Git\Client.LoanApplication\obj\Debug\Client.LoanApplication.csproj.AssemblyReference.cache

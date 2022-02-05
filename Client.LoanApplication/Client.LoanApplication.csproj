@@ -183,6 +183,8 @@
     <Compile Include="Utility.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\UD\BrokerDashboard.css" />
+    <Content Include="Content\UD\CommonLayout.css" />
     <Content Include="ExceptionHandling\ErrorLogs.txt" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />

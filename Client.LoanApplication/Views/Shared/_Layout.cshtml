@@ -60,13 +60,13 @@
             <div class="row" style="margin-left:10px;margin-right:10px;">
                 <div class="form-group">
                     <div class="col-md-4 cntrheaderlleft">
-                        @Html.Label("Hello, Broker", htmlAttributes: new { @class = "control-label mir" })
+                        @Html.Label("Hello, " + @User.Identity.Name , htmlAttributes: new { @class = "control-label mir" })
                     </div>
                     <div class="col-md-4 cntrheaderlcenter">
                         @Html.ActionLink("Dashboard", "Dashboard", "Broker")
                     </div>
                     <div class="col-md-4 cntrheaderlright">
-                        @Html.ActionLink("Logout", "Login", "Login",null, htmlAttributes: new { @class = "btn btn-default Actionbtn" })
+                        @Html.ActionLink("Logout", "Logout", "Login",null, htmlAttributes: new { @class = "btn btn-default Actionbtn" })
                     </div>
                 </div>
             </div>

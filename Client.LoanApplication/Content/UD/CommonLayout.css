@@ -1,0 +1,37 @@
+﻿
+.cntrheaderlleft {
+    text-align: left;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    border: ridge;
+}
+
+.cntrheaderlright {
+    text-align: right;
+    margin-bottom: 8px;
+    margin-top: 8px;
+    padding-right: 0px;
+}
+
+.cntrheaderlcenter {
+    text-align: center;
+    margin-top: 17px;
+}
+
+.divheaderbody {
+    border: ridge;
+    margin: 10px;
+}
+
+.divbody {
+    border: ridge;
+    width: 70%;
+}
+
+.mir {
+    margin: 4px;
+}
+
+.Actionbtn {
+    width: 130px;
+}

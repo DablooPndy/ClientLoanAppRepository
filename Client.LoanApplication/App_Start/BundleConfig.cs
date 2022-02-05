@@ -24,7 +24,10 @@ namespace Client.LoanApplication
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                       "~/Content/UD/BrokerDashboard.css",
+                        "~/Content/UD/CommonLayout.css"
+                      ));
         }
     }
 }
