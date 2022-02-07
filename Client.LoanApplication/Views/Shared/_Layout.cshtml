@@ -6,6 +6,8 @@
     <title>@ViewBag.Title - Loan Application System</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @*<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>*@
 </head>
 <body>
 
@@ -14,13 +16,13 @@
             <div class="row" style="margin-left:10px;margin-right:10px;">
                 <div class="form-group">
                     <div class="col-md-4 cntrheaderlleft">
-                        @Html.Label("Hello, " + @User.Identity.Name , htmlAttributes: new { @class = "control-label mir" })
+                        @Html.Label("Hello, " + @User.Identity.Name, htmlAttributes: new { @class = "control-label mir" })
                     </div>
                     <div class="col-md-4 cntrheaderlcenter">
-                        @Html.ActionLink("Dashboard", "Dashboard", "Broker")
+                        @Html.ActionLink("Dashboard", "Dashboard", @User.IsInRole("broker") ? "Broker" : "Underwriter")
                     </div>
                     <div class="col-md-4 cntrheaderlright">
-                        @Html.ActionLink("Logout", "Logout", "Login",null, htmlAttributes: new { @class = "btn btn-default Actionbtn" })
+                        @Html.ActionLink("Logout", "Logout", "Login", null, htmlAttributes: new { @class = "btn btn-default Actionbtn" })
                     </div>
                 </div>
             </div>
@@ -31,6 +33,22 @@
     </div>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/ajaxunobtrusive")
     @RenderSection("scripts", required: false)
 </body>
 </html>
+<script>
+
+    function OnSuccess(responsedata) {
+        if (responsedata.IsSuccess) {
+            alert("Data Saved Successfully !!!")
+            location.href = responsedata.RedirectUrl;
+        }
+        else {
+            alert("Some Errors Occured, Please check input data !!!")
+        }
+    }
+    function OnFailure() {
+        alert("Inserted Failed")
+    }
+</script>

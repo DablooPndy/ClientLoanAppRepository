@@ -22,31 +22,37 @@ namespace Client.LoanApplication.Controllers
         {
             if (ModelState.IsValid)
             {
+                string Roles = "";
+
                 bool IsValidUser = false;
-                if (_login.UserName == "broker" && _login.Password == "broker")
-                { IsValidUser = true; }
-                else if (_login.UserName == "underwriter" && _login.Password == "underwriter")
-                { IsValidUser = true; }
+                if (_login.UserName == "Broker" && _login.Password == "broker")
+                { 
+                    IsValidUser = true;
+                    Roles = "broker";
+                }
+                else if (_login.UserName == "Underwriter" && _login.Password == "underwriter")
+                { 
+                    IsValidUser = true;
+                    Roles = "underwriter";
+                }
 
                 if (IsValidUser)
                 {
-                    // Set Cookie for user with Non-Persistent Cookie
+                    // Set Cookie for user with Non-Persistent Cookie (Persist in Browser)
                     FormsAuthentication.SetAuthCookie(_login.UserName, false);
 
-                    FormsAuthentication.SetAuthCookie(_login.UserName, false);
-
-                    var authTicket = new FormsAuthenticationTicket(1, _login.UserName, DateTime.Now, DateTime.Now.AddMinutes(20), false, _login.UserName);
+                    var authTicket = new FormsAuthenticationTicket(1, _login.UserName, DateTime.Now, DateTime.Now.AddMinutes(20), false, Roles);
                     string encryptedTicket = FormsAuthentication.Encrypt(authTicket);
                     var authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
                     HttpContext.Response.Cookies.Add(authCookie);
-                   
-                    return _login.UserName == "broker" ?   RedirectToAction("Dashboard","Broker") : RedirectToAction("Dashboard","Underwriter");
+
+                    return _login.UserName == "Broker" ?   RedirectToAction("Dashboard","Broker") : RedirectToAction("Dashboard","Underwriter");
                 }
 
                 ModelState.AddModelError("", "invalid Username or Password");
-                return View(_login);
+                //return ("Login", _login);
             }
-            return View(_login);
+            return View ("Login",_login);
         }
 
         [HttpGet]

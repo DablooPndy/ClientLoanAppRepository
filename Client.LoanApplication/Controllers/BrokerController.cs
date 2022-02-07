@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Client.LoanApplication.Controllers
 {
-    [Authorize]
+  
     public class BrokerController : Controller
     {
         private readonly IMapper _mapper = null;
@@ -26,9 +26,9 @@ namespace Client.LoanApplication.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
+        [Authorize(Roles = "broker")]
         public async Task<ActionResult> Dashboard()
         {
-           // List<Models.LoanDetails> _lsloanDetails =  _mapper.Map<List<Models.LoanDetails>>(await _brokerClient.GetAllLoanDetailsAsync()).ToList();
             return View(_mapper.Map<List<Models.LoanDetails>>(await _brokerClient.GetAllLoanDetailsAsync()).ToList() as IEnumerable<Models.LoanDetails>);
         }
 
@@ -37,37 +37,74 @@ namespace Client.LoanApplication.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult CreateCase()
+        [Authorize(Roles = "broker")]
+        public ActionResult CreateCase(int? Id)
         {
             return View();
         }
 
         /// <summary>
-        /// Add New Case
+        /// Save details
         /// </summary>
         /// <param name="_loanDetails"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> CreateCase(Models.LoanDetails _loanDetails)
+        [Authorize(Roles = "broker")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> SaveDetails(Models.LoanDetails _loanDetails)
         {
-            //if (ModelState.IsValid && _loanDetails.UWReason == null)
-            //{
+            bool IsSuccess = false;
+            dynamic showMessageString = string.Empty;
+
+            ModelState.Remove("UWStatus");
+            ModelState.Remove("Id");
+
+            var error = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new { x.Key, x.Value.Errors }).ToArray();
+
+            if (ModelState.IsValid)
+            {
                 LoanDetails _loanDetailsClnt = _mapper.Map<LoanDetails>(_loanDetails);
 
-                if (await _brokerClient.InsertLoanDetailsAsync(_loanDetailsClnt))
-                   RedirectToAction("Dashboard");
-            //}
-            return View(_loanDetails);
+                // Update the case
+                if (_loanDetails.Id > 0) 
+                {
+                    IsSuccess = await _brokerClient.UpdateLoanDetailsAsync(_loanDetailsClnt);
+                }
+                // Add the new case 
+                else
+                {
+                    IsSuccess = await _brokerClient.InsertLoanDetailsAsync(_loanDetailsClnt);
+                }
+
+                showMessageString = new
+                {
+                    IsSuccess = IsSuccess,
+                    RedirectUrl = "/Broker/Dashboard"
+                };
+                return Json(showMessageString, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                showMessageString = new
+                {
+                    IsSuccess = IsSuccess,
+                };
+                return Json(showMessageString, JsonRequestBehavior.AllowGet);
+            }
         }
 
         /// <summary>
-        /// Get details for Edit
+        /// Get details for Edit by id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ActionResult> EditCase(int id)
+        [Authorize(Roles = "broker")]
+        public async Task<ActionResult> GetLoanDetailsbyId(int id)
         {
+            ModelState.Remove("UWStatus");
+            var error = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new { x.Key, x.Value.Errors }).ToArray();
+
             if (ModelState.IsValid)
             {
                 Models.LoanDetails _loanDetails = _mapper.Map<Models.LoanDetails>(await _brokerClient.GetLoanDetailsByIDAsync(id));
@@ -75,27 +112,9 @@ namespace Client.LoanApplication.Controllers
                 if (_loanDetails != null && _loanDetails.Id == id)
                 {
                     return View("CreateCase", _loanDetails);
-                } 
+                }
             }
-            return RedirectToAction("Dashboard");
-        }
-
-        /// <summary>
-        /// Update Details
-        /// </summary>
-        /// <param name="_loanDetails"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public async Task<ActionResult> EditCase(Models.LoanDetails _loanDetails)
-        {
-            if (ModelState.IsValid)
-            {
-                LoanDetails _loanDetailsClnt = _mapper.Map<LoanDetails>(_loanDetails);
-
-                if (await _brokerClient.UpdateLoanDetailsAsync(_loanDetailsClnt))
-                    RedirectToAction("Dashboard");
-            }
-            return View(_loanDetails);
+            return View("Dashboard");
         }
 
         /// <summary>
@@ -104,13 +123,23 @@ namespace Client.LoanApplication.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult>  DeleteCase(int id)
+        [Authorize(Roles = "broker")]
+        public async Task<ActionResult> DeleteCase(int id)
         {
+            bool IsSuccess = false;
+            dynamic showMessageString = string.Empty;
+            ModelState.Remove("UWStatus");
+            var error = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new { x.Key, x.Value.Errors }).ToArray();
+
             if (ModelState.IsValid)
             {
-                bool isDeleted = await _brokerClient.DeleteLoanDetailsAsync(id);
+                IsSuccess = await _brokerClient.DeleteLoanDetailsAsync(id);
             }
-            return View();
+            showMessageString = new
+            {
+                IsSuccess = IsSuccess,
+            };
+            return Json(showMessageString, JsonRequestBehavior.AllowGet);
         }
     }
 }

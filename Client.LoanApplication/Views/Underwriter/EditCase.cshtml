@@ -4,7 +4,7 @@
     ViewBag.Title = "EditCase";
 }
 
-@using (Html.BeginForm())
+@using ((Ajax.BeginForm("SaveDetails", "Underwriter", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "", OnSuccess = "OnSuccess", OnFailure = "OnFailure" })))
 {
     @Html.AntiForgeryToken()
 
@@ -13,7 +13,7 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
-        <div class="row mrgbtm">
+        <div class="row UWEditCasemrgbtm">
             <div class="col-md-2">
                 @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label" })
             </div>
@@ -39,7 +39,7 @@
             </div>
         </div>
 
-        <div class="row mrgbtm">
+        <div class="row UWEditCasemrgbtm">
             <div class="col-md-2">
                 @Html.LabelFor(model => model.Contact, htmlAttributes: new { @class = "control-label" })
             </div>
@@ -65,7 +65,7 @@
             </div>
         </div>
 
-        <div class="row mrgbtm">
+        <div class="row UWEditCasemrgbtm">
             <div class="col-md-2">
                 @Html.LabelFor(model => model.Amount, htmlAttributes: new { @class = "control-label" })
             </div>
@@ -89,7 +89,7 @@
             </div>
         </div>
 
-        <div class="row mrgbtm">
+        <div class="row UWEditCasemrgbtm">
             <div class="form-group">
                 <div class="col-md-2">
                     @Html.LabelFor(model => model.UWStatus, htmlAttributes: new { @class = "control-label" })
@@ -101,7 +101,7 @@
             </div>
         </div>
 
-        <div class="row mrgbtm">
+        <div class="row UWEditCasemrgbtm">
             <div class="form-group">
                 <div class="col-md-2">
                     @Html.LabelFor(model => model.UWReason, htmlAttributes: new { @class = "control-label" })
@@ -114,12 +114,12 @@
         </div>
 
 
-        <div class="row mrgbtn">
+        <div class="row UWEditCasemrgbtn">
             <div class="col-md-6" style="text-align:right">
-                <input type="submit" value="Save" class="btn btn-default actionbtn" />
+                <input type="submit" value="Save" class="btn btn-default UWEditCaseactionbtn" />
             </div>
             <div class="col-md-6" style="text-align:left">
-                @Html.ActionLink("Cancel", "Dashboard", "Underwriter", null, htmlAttributes: new { @class = "btn btn-default actionbtn" })
+                @Html.ActionLink("Cancel", "Dashboard", "Underwriter", null, htmlAttributes: new { @class = "btn btn-default UWEditCaseactionbtn" })
             </div>
         </div>
     </div>
@@ -128,17 +128,3 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
-<style>
-    .mrgbtm {
-        margin-bottom: 15px;
-    }
-
-    .mrgbtn {
-        margin-bottom: 15px;
-        margin-top: 30px;
-    }
-
-    .actionbtn {
-        width: 100px;
-    }
-</style>

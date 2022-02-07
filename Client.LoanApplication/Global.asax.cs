@@ -24,6 +24,7 @@ namespace Client.LoanApplication
 
         protected void Application_PostAuthenticateRequest(Object sender, EventArgs e)
         {
+            // Add roles here after the login
             var authCookie = HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName];
             if (authCookie != null)
             {

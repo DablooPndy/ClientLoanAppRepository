@@ -10,6 +10,7 @@ using Client.LoanApplication.OpenAPIConfiguration;
 
 namespace Client.LoanApplication.Controllers
 {
+    //[ValidateAntiForgeryToken]
     public class UnderwriterController : Controller
     {
         private readonly IMapper _mapper = null;
@@ -25,9 +26,10 @@ namespace Client.LoanApplication.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
+        [Authorize(Roles = "underwriter")]
         public async Task<ActionResult> Dashboard()
         {
-           // List<Models.LoanDetails> _lsloanDetails = _mapper.Map<List<Models.LoanDetails>>(_underwriterClient.GetAllLoanDetailsAsync().Result.ToList());
+            List<Models.LoanDetails> _lsloanDetails = _mapper.Map<List<Models.LoanDetails>>(_underwriterClient.GetAllLoanDetailsAsync().Result.ToList());
             return View(_mapper.Map<List<Models.LoanDetails>>(await _underwriterClient.GetAllLoanDetailsAsync()).ToList() as IEnumerable<Models.LoanDetails>);
         }
 
@@ -37,6 +39,7 @@ namespace Client.LoanApplication.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
+        [Authorize(Roles = "underwriter")]
         public async Task<ActionResult> EditCase(int id)
         {
             if (ModelState.IsValid)
@@ -48,7 +51,7 @@ namespace Client.LoanApplication.Controllers
                     return View(_loanDetails);
                 }
             }
-            return RedirectToAction("Dashboard", "Underwriter");
+            return View("Dashboard");
         }
 
         /// <summary>
@@ -57,16 +60,38 @@ namespace Client.LoanApplication.Controllers
         /// <param name="_loanDetails"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> EditCase(Models.LoanDetails _loanDetails)
+        [Authorize(Roles = "underwriter")]
+        public async Task<ActionResult> SaveDetails(Models.LoanDetails _loanDetails)
         {
+            bool IsSuccess = false;
+            dynamic showMessageString = string.Empty;
+
+            ModelState.Remove("Contact");
+            ModelState.Remove("Postcode");
+            var error = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new { x.Key, x.Value.Errors }).ToArray();
+
             if (ModelState.IsValid)
             {
                 LoanDetails _loanDetailsClnt = _mapper.Map<LoanDetails>(_loanDetails);
 
                 if (await _underwriterClient.UpdateLoanDetailsAsync(_loanDetailsClnt))
                     return RedirectToAction("Dashboard", "Underwriter");
+
+                showMessageString = new
+                {
+                    IsSuccess = IsSuccess,
+                    RedirectUrl = "/Underwriter/Dashboard"
+                };
+                return Json(showMessageString, JsonRequestBehavior.AllowGet);
             }
-            return View(_loanDetails);
+            else
+            {
+                showMessageString = new
+                {
+                    IsSuccess = IsSuccess,
+                };
+                return Json(showMessageString, JsonRequestBehavior.AllowGet);
+            }
         }
     }
 }
