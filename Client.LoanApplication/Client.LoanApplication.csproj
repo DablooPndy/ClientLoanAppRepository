@@ -164,7 +164,6 @@
     <Compile Include="CustomValidation\RequiredIfAttribute.cs" />
     <Compile Include="ExceptionHandling\CustomExceptionFilter.cs" />
     <Compile Include="Controllers\BrokerController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\UnderwriterController.cs" />
     <Compile Include="Global.asax.cs">
@@ -177,7 +176,9 @@
     <Compile Include="Models\Login.cs" />
     <Compile Include="OpenAPIConfiguration\Brokerclient.cs" />
     <Compile Include="OpenAPIConfiguration\IBrokerClient.cs" />
+    <Compile Include="OpenAPIConfiguration\ILoginClient.cs" />
     <Compile Include="OpenAPIConfiguration\IUnderwriterClient.cs" />
+    <Compile Include="OpenAPIConfiguration\Loginclient.cs" />
     <Compile Include="OpenAPIConfiguration\Underwriterclient.cs" />
     <Compile Include="OpenAPIs\v1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -226,9 +227,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Broker\Dashboard.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Underwriter\Dashboard.cshtml" />

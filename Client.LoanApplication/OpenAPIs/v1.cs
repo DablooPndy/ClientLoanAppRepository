@@ -1178,6 +1178,12 @@ namespace Client.LoanApplication
         [Newtonsoft.Json.JsonProperty("Password", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string Password { get; set; }
     
+        [Newtonsoft.Json.JsonProperty("Roles", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Roles { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("IsUserValid", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? IsUserValid { get; set; }
+    
     
     }
 

@@ -17,6 +17,7 @@ namespace Client.LoanApplication.Mapping
         public ModelToContractProfile()
         {
             CreateMap<Models.LoanDetails,LoanDetails>();
+            CreateMap<Models.Login, LoginDetails>();
         }
     }
 }

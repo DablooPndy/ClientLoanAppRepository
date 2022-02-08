@@ -17,7 +17,7 @@ namespace Client.LoanApplication.Models
         [Required(ErrorMessage = "required")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-
         public string Roles { get; set; }
+        public bool IsUserValid { get; set; }
     }
 }

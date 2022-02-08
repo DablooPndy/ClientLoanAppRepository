@@ -10,7 +10,8 @@ using System.Threading.Tasks;
 
 namespace Client.LoanApplication.Controllers
 {
-  
+
+    [Authorize(Roles = "Broker")]
     public class BrokerController : Controller
     {
         private readonly IMapper _mapper = null;
@@ -26,7 +27,6 @@ namespace Client.LoanApplication.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Authorize(Roles = "broker")]
         public async Task<ActionResult> Dashboard()
         {
             return View(_mapper.Map<List<Models.LoanDetails>>(await _brokerClient.GetAllLoanDetailsAsync()).ToList() as IEnumerable<Models.LoanDetails>);
@@ -37,7 +37,6 @@ namespace Client.LoanApplication.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Authorize(Roles = "broker")]
         public ActionResult CreateCase(int? Id)
         {
             return View();
@@ -49,7 +48,6 @@ namespace Client.LoanApplication.Controllers
         /// <param name="_loanDetails"></param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize(Roles = "broker")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SaveDetails(Models.LoanDetails _loanDetails)
         {
@@ -68,11 +66,13 @@ namespace Client.LoanApplication.Controllers
                 // Update the case
                 if (_loanDetails.Id > 0) 
                 {
+                    _loanDetails.ModifiedBy = User.Identity.Name;
                     IsSuccess = await _brokerClient.UpdateLoanDetailsAsync(_loanDetailsClnt);
                 }
                 // Add the new case 
                 else
                 {
+                    _loanDetails.CreatedBy = User.Identity.Name;
                     IsSuccess = await _brokerClient.InsertLoanDetailsAsync(_loanDetailsClnt);
                 }
 
@@ -99,7 +99,6 @@ namespace Client.LoanApplication.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        [Authorize(Roles = "broker")]
         public async Task<ActionResult> GetLoanDetailsbyId(int id)
         {
             ModelState.Remove("UWStatus");
@@ -123,7 +122,6 @@ namespace Client.LoanApplication.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize(Roles = "broker")]
         public async Task<ActionResult> DeleteCase(int id)
         {
             bool IsSuccess = false;

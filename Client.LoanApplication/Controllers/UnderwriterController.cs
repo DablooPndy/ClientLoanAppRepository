@@ -10,7 +10,7 @@ using Client.LoanApplication.OpenAPIConfiguration;
 
 namespace Client.LoanApplication.Controllers
 {
-    //[ValidateAntiForgeryToken]
+    [Authorize(Roles = "Underwriter")]
     public class UnderwriterController : Controller
     {
         private readonly IMapper _mapper = null;
@@ -25,8 +25,7 @@ namespace Client.LoanApplication.Controllers
         /// Get all details
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
-        [Authorize(Roles = "underwriter")]
+        [HttpGet] 
         public async Task<ActionResult> Dashboard()
         {
             List<Models.LoanDetails> _lsloanDetails = _mapper.Map<List<Models.LoanDetails>>(_underwriterClient.GetAllLoanDetailsAsync().Result.ToList());
@@ -39,7 +38,6 @@ namespace Client.LoanApplication.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        [Authorize(Roles = "underwriter")]
         public async Task<ActionResult> EditCase(int id)
         {
             if (ModelState.IsValid)
@@ -60,7 +58,7 @@ namespace Client.LoanApplication.Controllers
         /// <param name="_loanDetails"></param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize(Roles = "underwriter")]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> SaveDetails(Models.LoanDetails _loanDetails)
         {
             bool IsSuccess = false;
@@ -72,11 +70,12 @@ namespace Client.LoanApplication.Controllers
 
             if (ModelState.IsValid)
             {
+                _loanDetails.CaseReviewedBy = User.Identity.Name;
+
                 LoanDetails _loanDetailsClnt = _mapper.Map<LoanDetails>(_loanDetails);
 
-                if (await _underwriterClient.UpdateLoanDetailsAsync(_loanDetailsClnt))
-                    return RedirectToAction("Dashboard", "Underwriter");
-
+                IsSuccess = await _underwriterClient.UpdateLoanDetailsAsync(_loanDetailsClnt);
+                
                 showMessageString = new
                 {
                     IsSuccess = IsSuccess,

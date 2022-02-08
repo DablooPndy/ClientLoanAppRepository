@@ -21,11 +21,12 @@ namespace Client.LoanApplication.CustomValidation
 
         protected override ValidationResult IsValid(object value, ValidationContext context)
         {
-            if (value != null)
+
+            Object instance = context.ObjectInstance;
+            Type type = instance.GetType();
+            Object proprtyvalue = type.GetProperty(PropertyName).GetValue(instance, null);
+            if (proprtyvalue != null)
             {
-                Object instance = context.ObjectInstance;
-                Type type = instance.GetType();
-                Object proprtyvalue = type.GetProperty(PropertyName).GetValue(instance, null);
                 if (proprtyvalue.ToString() == DesiredValue.ToString() && value == null)
                 {
                     return new ValidationResult(ErrorMessage);

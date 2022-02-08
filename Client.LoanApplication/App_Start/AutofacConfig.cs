@@ -48,6 +48,7 @@ namespace Client.LoanApplication
             // Register Classess
             builder.RegisterType<Underwriterclient>().As<IUnderwriterClient>().InstancePerRequest();
             builder.RegisterType<Brokerclient>().As<IBrokerClient>().InstancePerRequest();
+            builder.RegisterType<Loginclient>().As<ILoginClient>().InstancePerRequest();
 
             // Register Automapper Configuration
             builder.RegisterInstance(AutomapperConfiguration.Configure());
