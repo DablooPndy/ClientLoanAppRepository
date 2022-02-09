@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Client.LoanApplication.Controllers
 {
 
-    [Authorize(Roles = "Broker")]
+    [AuthorizeRole(Role.Broker)]
     public class BrokerController : Controller
     {
         private readonly IMapper _mapper = null;

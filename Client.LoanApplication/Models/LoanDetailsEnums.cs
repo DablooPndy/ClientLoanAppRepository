@@ -23,4 +23,9 @@ namespace Client.LoanApplication.Models
         Rejected = 2,
         Cancelled = 3
     }
+    public enum Role
+    {
+        Underwriter = 1,
+        Broker = 2,
+    }
 }

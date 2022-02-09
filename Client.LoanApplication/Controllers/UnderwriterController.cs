@@ -10,7 +10,7 @@ using Client.LoanApplication.OpenAPIConfiguration;
 
 namespace Client.LoanApplication.Controllers
 {
-    [Authorize(Roles = "Underwriter")]
+    [AuthorizeRole(Role.Underwriter)]
     public class UnderwriterController : Controller
     {
         private readonly IMapper _mapper = null;

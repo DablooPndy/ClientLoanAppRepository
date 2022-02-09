@@ -39,11 +39,11 @@
                 </div>
                 <div class="row">
                     <div class="form-group">
-                        <div class="col-md-2"></div>
-                        <div class="col-md-3 cntrlLeftLogin" style="margin-top:17px;">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-2" style="margin-top:17px;">
                             @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label" })
                         </div>
-                        <div class="col-md-4 cntrlRightLogin">
+                        <div class="col-md-4">
                             @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
                         </div>
@@ -52,11 +52,11 @@
                 </div>
                 <div class="row">
                     <div class="form-group">
-                        <div class="col-md-2"></div>
-                        <div class="col-md-3 cntrlLeftLogin" style="margin-top:9px;">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-2" style="margin-top:9px;">
                             @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label" })
                         </div>
-                        <div class="col-md-4 cntrlRightLogin" style="margin-top:0px;">
+                        <div class="col-md-4" style="margin-top:0px;">
                             @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                         </div>
@@ -65,12 +65,14 @@
                 </div>
                 <div class="row">
                     <div class="form-group">
-                        <div class="col-md-6 text-right" style="padding-right:0px;margin-top:15px;">
-                            <input type="submit" value="Login"  class="btn btn-default" style="width:150px;" />
+                        <div class="col-md-4"></div>
+                        <div class="col-md-2" style="padding-right:0px;margin-top:15px;">
+                            <input type="submit" value="Login" class="btn btn-default" style="width: 100px;"/>
                         </div>
-                        <div class="col-md-6 text-left">
-                            <input value="Cancel" onclick="window.location.reload();" class="btn btn-default" style="width: 157px; margin-top: 15px; " />
+                        <div class="col-md-2" style="padding-right:0px;margin-top:15px;">
+                            <input value="Cancel" class="btn btn-default" onclick="window.location.reload();" style="width: 100px;" />
                         </div>
+                        <div class="col-md-4"></div>
                     </div>
                 </div>
             </div>
