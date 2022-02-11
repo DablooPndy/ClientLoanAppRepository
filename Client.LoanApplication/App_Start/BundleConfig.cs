@@ -10,7 +10,9 @@ namespace Client.LoanApplication
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
-                        "~/Scripts/jquery-3.4.1.min.js"
+                        "~/Scripts/jquery-3.4.1.min.js",
+                         "~/Scripts/DataTables/jquery.dataTables.js",
+                            "~/Scripts/DataTables/dataTables.bootstrap.js"
                         ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -27,12 +29,15 @@ namespace Client.LoanApplication
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js"));
+                      "~/Scripts/bootstrap.js",
+                      "~/Scripts/bootbox.js"
+                      ));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
-                        "~/Content/UD/CommonLayout.css"
+                        "~/Content/UD/CommonLayout.css",
+                         "~/Content/DataTables/css/dataTables.bootstrap.css"
                       ));
         }
     }

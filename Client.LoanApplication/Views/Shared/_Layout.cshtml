@@ -39,14 +39,14 @@
 
     function OnSuccess(responsedata) {
         if (responsedata.IsSuccess) {
-            alert("Data Saved Successfully !!!")
+          /*  alert("Data Saved Successfully !!!")*/
             location.href = responsedata.RedirectUrl;
         }
         else {
-            alert("Some Errors Occured, Please check input data !!!")
+            bootbox.alert("Some Errors Occured, Please check input data !!!")
         }
     }
     function OnFailure() {
-        alert("Inserted Failed")
+        bootbox.alert("Inserted Failed")
     }
 </script>
