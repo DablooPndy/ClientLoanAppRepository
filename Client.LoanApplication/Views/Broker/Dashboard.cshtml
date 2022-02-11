@@ -8,7 +8,7 @@
     @Html.ActionLink("Create Case", "CreateCase", "Broker", null, htmlAttributes: new { @class = "btn btn-default Actionbtn" })
 </div>
 <div class="table-responsive">
-    <table id="LoanCases" class="table table-bordered table-striped">
+    <table class="table table-bordered table-striped">
         <thead style="background-color: darkgrey; border-block-color: darkgrey; ">
             <tr>
                 <th>Loan Amount</th>
@@ -63,33 +63,40 @@
 </div>
 
 @section Scripts {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            $(LoanCases).dataTable();
-            $(document).on('click', '.Remove', function () {
-                var button = $(this);
-                var id = button.attr("id");
 
-                bootbox.confirm("Are you sure you want to delete this Case?", function (result) {
-                    if (result) {
-                        $.ajax({
-                            url: "/Broker/DeleteCase",
-                            data: { "id": id },
-                            type: "Post",
-                            dataType: "json",
-                            success: function (result) {
-                                if (result.IsSuccess) {
-                                    button.parents("tr").remove();
-                                    bootbox.alert("Records deleted successfully !!!");
+            $(document).on('click', '.Remove', function () {
+                var id = $(this).attr("id");
+                $.confirm({
+                    title: 'Confirm!',
+                    content: 'Are you sure you want to delete this Record?',
+                    buttons: {
+                        confirm: function () {
+                            $.ajax({
+                                url: "/Broker/DeleteCase",
+                                data: { "id": id },
+                                type: "Post",
+                                dataType: "json",
+                                success: function (result) {
+                                    if (result.IsSuccess) {
+                                      /*  $.alert('Records deleted successfully !!!');*/
+                                        window.location.reload();
+                                    }
+                                },
+                                error: function (errormessage) {
+                                    $.alert(errormessage.responseText);
                                 }
-                            },
-                            error: function (errormessage) {
-                                bootbox.alert(errormessage.responseText);
-                            }
-                        });
+                            });
+                        },
+                        cancel: function () {
+                        },
                     }
                 });
             });
+
         });
     </script>
 }

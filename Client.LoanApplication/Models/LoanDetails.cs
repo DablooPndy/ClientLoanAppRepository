@@ -20,8 +20,7 @@ namespace Client.LoanApplication.Models
         public decimal LTV { get; set; }
 
         [Display(Name = "Charge Type")]
-        [Required]
-        public ChargeType? ChargeType { get; set; }
+        public ChargeType ChargeType { get; set; }
 
         [Required]
         [StringLength(100)]
