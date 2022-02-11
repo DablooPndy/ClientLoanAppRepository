@@ -5,7 +5,7 @@
 }
 
 <div class="table-responsive">
-    <table class="table table-bordered table-striped" style="margin-top:20px;">
+    <table id="LoanCases" class="table table-bordered table-striped" style="margin-top:20px;">
         <thead style="background-color: darkgrey; border-block-color: darkgrey; ">
             <tr>
                 <th>Loan Amount</th>
@@ -35,19 +35,24 @@
                         @Html.DisplayFor(modelItem => item.FirstName)
                     </td>
                     <td>
-                        @if (item.Postcode == null){
-                            @Html.Display("");}
-                    else{
-                        @Html.DisplayFor(modelItem => item.Postcode);
-                    }
+                        @if (item.Postcode == null)
+                        {
+                            @Html.Display("");
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(modelItem => item.Postcode);
+                        }
                         @*@Html.DisplayFor(modelItem => item.Postcode modelItem => item.Postcode)*@
                     </td>
 
                     <td>
-                        @if (item.UWStatus == 0){
+                        @if (item.UWStatus == 0)
+                        {
                             @Html.Display("");
                         }
-                        else{
+                        else
+                        {
                             @Html.DisplayFor(modelItem => item.UWStatus);
                         }
                     </td>
@@ -59,3 +64,11 @@
         </tbody>
     </table>
 </div>
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(LoanCases).dataTable();
+            
+        });
+    </script>
+}
